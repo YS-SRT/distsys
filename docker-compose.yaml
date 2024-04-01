@@ -1,0 +1,87 @@
+version: '2'
+
+services:
+  # distsys-webui:
+  #   # image: ${FRONTEND_IMAGE}
+  #   container_name: distsys-webui
+  #   build: ./distsys-webui
+  #   restart: always
+  #   ports:
+  #     - 8099:80
+  #   networks:
+  #     - distsys
+  #   depends_on:
+  #     - distsys-go-server
+
+  distsys-go-server:
+    # image: ${BACKEND_IMAGE}
+    container_name: distsys-go-server
+    build: ./distsys-go
+    restart: always
+    ports:
+      - 8090:8090
+    networks:
+      - distsys
+    depends_on:
+      - distsys-postgres
+      - distsys-redis
+      - distsys-minio
+
+  distsys-postgres:
+    image: postgres:latest
+    container_name: distsys-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=distsys
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=distsys
+    expose:
+      - 5432
+    networks:
+      - distsys
+    volumes:
+      - ./postgres_init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  distsys-redis:
+    image: redis:latest
+    command: redis-server --requirepass VVUH3PwskTzagyIlHTkx
+    container_name: distsys-redis
+    restart: unless-stopped
+    expose:
+      - 6379
+    networks:
+      - distsys
+
+  distsys-minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9091" --address ":9001"
+    ports:
+      - 9001:9001
+      - 9091:9091
+    # volumes:
+    #   - datastore:/data
+    environment:
+      - MINIO_ROOT_USER=root
+      - MINIO_ROOT_PASSWORD=admin2024
+    networks:
+      - distsys
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - distsys-minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set dsminio http://distsys-minio:9001 root admin2024;
+      /usr/bin/mc mb dsminio/distsys;
+      /usr/bin/mc anonymous set download dsminio/distsys;
+      /usr/bin/mc admin user add dsminio UnNDmPdcfqFgQrcYbS1y qDL9byiUG6teQLKg77qGmGjW8oMy5gjcAXmgm6P9;
+      /usr/bin/mc admin policy attach dsminio readwrite --user=UnNDmPdcfqFgQrcYbS1y;
+      exit 0;
+      "
+    networks:
+      - distsys
+
+networks:
+  distsys:
+    driver: bridge

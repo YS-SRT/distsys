@@ -1,0 +1,127 @@
+definitions:
+  dto.UserLoginByPWDInput:
+    properties:
+      password:
+        maxLength: 20
+        minLength: 6
+        type: string
+      phone:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
+  dto.UserRegisterInput:
+    properties:
+      nickname:
+        maxLength: 30
+        type: string
+      password:
+        maxLength: 20
+        minLength: 6
+        type: string
+      phone:
+        maxLength: 20
+        type: string
+      portrait:
+        maxLength: 100
+        type: string
+      wechat_ids:
+        maxLength: 255
+        type: string
+    required:
+    - password
+    - wechat_ids
+    type: object
+info:
+  contact: {}
+paths:
+  /public/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: upload file
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":"0", "message":"ok", "data":"response data"}'
+          schema:
+            type: string
+      summary: UploadFile
+      tags:
+      - user
+  /public/uploads:
+    post:
+      consumes:
+      - multipart/form-data
+      description: upload Files
+      parameters:
+      - collectionFormat: csv
+        description: files to upload
+        in: formData
+        items:
+          type: file
+        name: file
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":"0", "message":"ok", "data":"response data"}'
+          schema:
+            type: string
+      summary: UploadFiles
+      tags:
+      - user
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: login
+      parameters:
+      - description: longin params
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserLoginByPWDInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":"0", "message":"ok", "data":"response data"}'
+          schema:
+            type: string
+      summary: UserLogin
+      tags:
+      - user
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      description: Register
+      parameters:
+      - description: register params
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserRegisterInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":"0", "message":"ok", "data":"response data"}'
+          schema:
+            type: string
+      summary: UserRegister
+      tags:
+      - user
+swagger: "2.0"
