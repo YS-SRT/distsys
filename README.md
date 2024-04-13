@@ -1,27 +1,80 @@
-##### Distsys Project:
-分级销售系统 + 功能化模块组合
-
-##### Tech Stack:
-Gin, Gorm, Viper, Zap, Casbin, JWT, swagger
-PostgreSQL, minio, redis
-
-amis, vue3, bootstrap5
-
-Docker, Docker-compose
-
-##### swag cmd
-$ go install github.com/swaggo/swag/cmd/swag@latest
-
-##### swagger init
-$ swag init -g ./main.go -o ./docs --parseDependency
-
-##### web ui in dev environment
-
-http://localhost:8090/swagger/index.html
-
-minio local:
-http://localhost:9091
+<h2 align="center">DistSys（Micro-SaaS）面向中小微企业</h2>
 
 
-Admin url
-http://localhost:8090/
+
+
+------------------------------
+随着移动互联网的普及，越来越多的中小微企业除了投入自有资源面向用户之外，还有充分挖掘已有用户的需求，对接第三方商品和服务的愿望。为了快速满足这些企业和个人的商业发展需求，将逐步推出DistSys各种子系统，分享给各类用户。
+
+
+
+系统目前设计的模块：
+
+- **distsys-core**: 模块组合配置框架核心；
+
+- **distsys-user**: 用户管理模块，提供层级和群组功能，实现各种分销模式；
+
+- **distsys-post**: 用户模块，提供照片和文字的个性化展示功能
+
+- **distsys-privilege**: 权限控制模块，对用户，群组和访问资源进行控制管理；
+
+- **distsys-mall**: 商城模块，对接服务和商品的提供商；
+
+- **distsys-news**: 新闻资讯模块，发表与评论相关信息，提高用户活跃程度;
+
+- **distsys-activities**: 活动模块，结合线上线下活动，增加用户粘性;
+
+- **distsys-admin**: 管理员模块，提供可视化的操作管理理念;
+
+- **distsys-im**: 站内通讯，增强用户之间的交流与分享；
+
+- **distsys-ai**: AI模块，赋能系统，提供各种流行的智能化辅助工具。
+
+  
+
+## 产品特色
+
+- **开源**:  欢迎各种独立开发机构和个人白票，欢迎企业私有化部署，致力于为商业信息化发展添砖加瓦；
+- **多种开发语言**:  提供各种开发语言版本，java\python\go\node.js等；
+- **多端支持**:  提供各种小程序，App等多端的实现和支持；
+- **简单部署**: 提供一键部署支持，减少繁琐的运维过程；
+
+
+
+## UI 展示
+
+将要开放
+
+
+
+
+
+## 在线体验
+
+- 环境地址：
+
+| :warning: 注意 |
+| :------------: |
+|                |
+|                |
+|                |
+
+## 快速开始
+
+all-in-one的Docker-compose部署方式
+
+$ docker compose  up -d
+
+
+
+## 安全说明
+
+DistSys是一款安全产品，请参考 [基本安全建议]
+进行安装部署。如果您发现安全相关问题，请直接联系我们：
+
+- 邮箱：
+- 电话：
+
+## License & Copyright
+
+开源可商用
